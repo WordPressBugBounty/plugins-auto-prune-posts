@@ -2,8 +2,8 @@
 Contributors: Ramon Fincken
 Tags: mass, prune, delete, expire, clean, remove, trash, attachment, attachments, coupon, schedule, post, posts, category, CPT
 Requires at least: 2.3
-Tested up to: 6.6.2
-Stable tag: 3.0.0
+Tested up to: 6.8.3
+Stable tag: 3.1.1
 
 Auto deletes expires (prunes) posts after a certain amount of time. On a per category basis (single category, or all at once.)<br>
 Handy if you want to have posts with a limited timeframe such as offers, coupons etc.. Posts will auto delete on a per category basis.
@@ -18,10 +18,10 @@ Will also trash post attachments.<br>
 Sends notification to site admin (can be turned off).<br>
 No cronjob needed :)<br>
 
-* Coding by: <a href="https://www.mijnpress.nl">MijnPress.nl</a> <a href="https://twitter.com/#!/ramonfincken">Twitter profile</a> <a href="https://profiles.wordpress.org/ramon-fincken/">More plugins</a><br>
-* Idea by <a href="http://www.nostromo.nl">Nostromo.nl</a><br>
+* Coding by: <a href="https://www.mijnpress.nl">MijnPress.nl</a> <a href="https://mastodon.social/@ramonfincken">Mastodon profile</a> <a href="https://profiles.wordpress.org/ramon-fincken/">More plugins</a><br>
+* Idea by <a href="https://www.nostromo.nl">Nostromo.nl</a><br>
 
-Donate <a href="http://donate.ramonfincken.com/">http://donate.ramonfincken.com/</a>
+Donate <a href="https://donate.ramonfincken.com/">https://donate.ramonfincken.com/</a>
 
 
 == Installation ==
@@ -39,6 +39,12 @@ I always check my toots, so mention my name with https://mastodon.social/deck/@r
 
 
 == Changelog ==
+= 3.1.1 =
+Bugfix: Re-added the framework
+
+= 3.1.0 =
+Change: Removed &prune=true GET option to force run prune using wp-admin as it is false-positively flagged ads CSS by pathstack. Now using a form post button.
+
 = 3.0.0 =
 Bugfix: XSS in POST types
 

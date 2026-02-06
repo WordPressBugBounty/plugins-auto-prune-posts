@@ -9,11 +9,10 @@
 ?>
 
 <h3>Auto prune posts</h3>
-Donate <a href="http://donate.ramonfincken.com/">http://donate.ramonfincken.com/</a><br/>
+Donate <a href="https://donate.ramonfincken.com/">https://donate.ramonfincken.com/</a><br/>
 <?php
-if($action_taken)
-{
-	$plugin->show_message('Settings updated!');
+if( $action_taken ) {
+	$plugin->show_message( 'Settings updated!' );
 }
 ?>
 <br/>
@@ -25,32 +24,29 @@ wp_nonce_field( 'auto-prune-add' );
 
 Delete posts in <?php wp_dropdown_categories(array('hide_empty' => 0, 'name' => 'cat_id_add', 'hierarchical' => true, 'orderby' => 'name', 'show_option_all' => 'All')); ?> after
 <input type="text" maxlength="6" name="period_duration_add" style="width: 45px;">
-  <select name="period_add">
-  <?php
-  foreach($plugin->periods as $period)
-  {
-    echo '<option value="'.$period.'">'.$period.'(s)</option>';
-  }
-  ?>
-  </select>
+<select name="period_add">
+<?php
+    foreach( $plugin->periods as $period ) {
+        echo '<option value="'.$period.'">'.$period.'(s)</option>';
+    }
+?>
+</select>
   
 Type:  
 <?php 
-if(count($plugin->all_types) == 1)
-{
+if( count( $plugin->all_types ) === 1 ) {
 	echo 'Post <input type="hidden" name="type" value="'.$plugin->all_types[0].'" />';
 }
 else
 {
 ?>  
-  <select name="type">
-  <?php
-  foreach($plugin->all_types as $type)
-  {
+<select name="type">
+<?php
+foreach( $plugin->all_types as $type ) {
     echo '<option value="'.$type.'">'.$type.'</option>';
-  }
-  ?>
-  </select>
+}
+?>
+</select>
 <?php 
 }
 ?> 
@@ -60,6 +56,16 @@ else
 <input type="hidden" name="formaction" value="add" />
 <input type="submit" name="submitbutton" value="Add settings" class="button-primary">
 <input type="reset" name="submitbutton" value="Reset" class="button"></form>
+<br/>
+
+<form id="form1" name="form1" method="post" action="" onsubmit="return confirm('Are you sure?')">
+<?php
+	wp_nonce_field( 'auto-prune-forcerun' );
+?>
+<input type="hidden" name="formaction" value="forcerun" />
+<input type="submit" name="submitbutton" value="Force a run now" class="button-primary">
+</form>
+
 <br/>
 
 
@@ -114,10 +120,8 @@ wp_nonce_field( 'auto-prune-update' );
    <tbody>
 
 <?php 
-foreach($plugin->conf['config'] as $cat_id => $type)
-{
-	foreach($type as $the_type => $values)
-	{
+foreach( $plugin->conf['config'] as $cat_id => $type ) {
+	foreach( $type as $the_type => $values ) {
       	?>
    <tr class="iedit">
       <td valign="top">Category</td>
@@ -149,10 +153,9 @@ foreach($plugin->conf['config'] as $cat_id => $type)
       <input type="text" maxlength="6" style="width: 45px;" name="period_duration[<?php echo $cat_id; ?>][<?php echo $the_type; ?>]" value="<?php echo $values['period']; ?>" />
       <select name="period[<?php echo $cat_id; ?>][<?php echo $the_type; ?>]">
   <?php
-  foreach($plugin->periods as $period)
-  {
+  foreach( $plugin->periods as $period ) {
     $select = '';
-    if($values['period_duration'] == $period)
+    if( $values['period_duration'] === $period )
     {
     	$select = ' selected="selected"';
     }
@@ -165,11 +168,9 @@ foreach($plugin->conf['config'] as $cat_id => $type)
       <input type="text" maxlength="6" style="width: 45px;" disabled="disabled" name="period_duration_disabled[<?php echo $cat_id; ?>][<?php echo $the_type; ?>]" value="<?php echo $values['period']; ?>" />
       <select disabled="disabled" name="period_disabled[<?php echo $cat_id; ?>][<?php echo $the_type; ?>]">
   <?php
-  foreach($plugin->periods as $period)
-  {
+  foreach( $plugin->periods as $period ) {
     $select = '';
-    if($values['period_duration'] == $period)
-    {
+    if( $values['period_duration'] === $period ) {
     	$select = ' selected="selected"';
     }
     echo '<option value="'.$period.'"'.$select.'>'.$period.'(s)</option>';

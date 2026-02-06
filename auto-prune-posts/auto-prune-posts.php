@@ -3,14 +3,13 @@
  Plugin Name: Auto Prune Posts
  Plugin URI: https://www.mijnpress.nl
  Description: Auto deletes expires (prunes) posts after a certain amount of time. On a per category basis.
- Version: 3.0.0
+ Version: 3.1.1
  Author: Ramon Fincken
  Author URI: https://www.mijnpress.nl
  Created on 31-oct-2010 17:33:40
  */
 
-if( !class_exists('mijnpress_plugin_framework' ) )
-{
+if( !class_exists('mijnpress_plugin_framework' ) ) {
 	include( 'mijnpress_plugin_framework.php' );
 }
 
@@ -19,8 +18,7 @@ if( !class_exists('mijnpress_plugin_framework' ) )
  */
 class plugin_auto_prune_posts extends mijnpress_plugin_framework
 {
-	function __construct()
-	{
+	function __construct() {
 		$this->showcredits = true;
 		$this->showcredits_fordevelopers = true;
 		$this->plugin_title = 'Auto prune posts';
@@ -40,8 +38,7 @@ class plugin_auto_prune_posts extends mijnpress_plugin_framework
 		}
 		else
 		{
-			if($reset)
-			{
+			if( $reset ) {
 				update_option('plugin_autopruneposts_conf', array ('version' => '1.1', 'settings' => $default_settings, 'config' => array()));
 				$this->show_message('Auto prune posts plugin RESET');
 			}
@@ -141,6 +138,14 @@ class plugin_auto_prune_posts extends mijnpress_plugin_framework
 		$action_taken = false;
 		if (isset ($_POST['formaction'])) {
 			switch ($_POST['formaction']) {
+			
+				case 'forcerun':
+					check_admin_referer( 'auto-prune-forcerun' );
+					delete_transient( 'auto-prune-posts-lastrun' );
+					$plugin->prune( true );
+					echo 'Prune force called';
+					die();
+				break;
 				case 'updatesettings':
 				
 					check_admin_referer( 'auto-prune-updatesettings' );
@@ -269,13 +274,7 @@ class plugin_auto_prune_posts extends mijnpress_plugin_framework
 			delete_transient('auto-prune-posts-lastrun');
 		}
 		
-		if(isset($_GET['prune']))
-		{
-			delete_transient('auto-prune-posts-lastrun');
-			$plugin->prune(true);
-			echo 'Prune force called';
-			die();
-		}
+
 		// Show form
 		include ( 'auto-prune-posts-adminpage.php' );
 
